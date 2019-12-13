@@ -7,6 +7,7 @@ from typing import Any
 
 queue = []
 
+
 def enqueue(elem: Any, priority: int = 0) -> None:
 	"""
 	Operation that add element to the end of the queue
@@ -15,7 +16,7 @@ def enqueue(elem: Any, priority: int = 0) -> None:
 	:return: Nothing
 	"""
 	global queue
-	queue.append(tuple(priority, elem))
+	queue.append((priority, elem))
 	return None
 
 
@@ -27,7 +28,7 @@ def dequeue() -> Any:
 	"""
 	global queue
 	queue.sort(reverse=True)
-	return queue.pop()
+	return queue.pop()[1]
 
 
 def peek(ind: int = 0, priority: int = 0) -> Any:
@@ -48,5 +49,6 @@ def clear() -> None:
 
 	:return: None
 	"""
+	global queue
 	queue = []
 	return None
