@@ -3,15 +3,18 @@ My little Queue
 """
 from typing import Any
 
+queue = []
+
 
 def enqueue(elem: Any) -> None:
 	"""
-	Operation that add element to the end of the queue
+	Operation that adds element to the end of the queue
 
 	:param elem: element to be added
 	:return: Nothing
 	"""
-	print(elem)
+	global queue
+	queue.insert(0, elem)
 	return None
 
 
@@ -21,18 +24,20 @@ def dequeue() -> Any:
 
 	:return: dequeued element
 	"""
-	return None
+	return queue.pop()
 
 
 def peek(ind: int = 0) -> Any:
 	"""
-	Allow you to see at the element in the queue without dequeuing it
+	Allow you to look at the element in the queue without dequeueing it
 
 	:param ind: index of element (count from the beginning)
 	:return: peeked element
 	"""
+	global queue
+	ind = ~ind
 	print(ind)
-	return None
+	return queue[ind]
 
 
 def clear() -> None:
@@ -41,4 +46,6 @@ def clear() -> None:
 
 	:return: None
 	"""
+	global queue
+	queue = []
 	return None
