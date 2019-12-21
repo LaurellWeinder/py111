@@ -15,7 +15,6 @@ def push(elem: Any) -> None:
 	"""
 	global stack
 	stack.append(elem)
-	print(elem)
 	return None
 
 
@@ -26,7 +25,10 @@ def pop() -> Any:
 	:return: popped element
 	"""
 	global stack
-	return stack.pop()
+	if len(stack) == 0:
+		return None
+	else:
+		return stack.pop()
 
 
 def peek(ind: int = 0) -> Any:
@@ -49,5 +51,5 @@ def clear() -> None:
 	:return: None
 	"""
 	global stack
-	stack = [None]
+	stack = []
 	return None

@@ -24,7 +24,10 @@ def dequeue() -> Any:
 
 	:return: dequeued element
 	"""
-	return queue.pop()
+	if len(queue) == 0:
+		return None
+	else:
+		return queue.pop()
 
 
 def peek(ind: int = 0) -> Any:

@@ -28,6 +28,7 @@ def dequeue() -> Any:
 	"""
 	global queue
 	queue.sort(reverse=True)
+	[].sort()
 	return queue.pop()[1]
 
 
