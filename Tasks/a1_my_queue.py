@@ -39,7 +39,6 @@ def peek(ind: int = 0) -> Any:
 	"""
 	global queue
 	ind = ~ind
-	print(ind)
 	return queue[ind]
 
 
