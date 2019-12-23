@@ -1,4 +1,5 @@
 from typing import Any, Sequence, Optional
+from random import shuffle
 
 
 def binary_search(elem: Any, arr: Sequence, low=0, high=None) -> Optional[int]:
@@ -12,15 +13,14 @@ def binary_search(elem: Any, arr: Sequence, low=0, high=None) -> Optional[int]:
 	if high is None:
 		high = len(arr)
 	middle = (high - low) // 2 + low
-	if arr[middle] == elem:
+	if high == low:
+		return None
+	elif arr[middle] == elem:
 		return middle
 	elif arr[middle] < elem:
-		return binary_search(elem, arr, middle, high)
+		return binary_search(elem, arr, middle + 1, high)
 	elif arr[middle] > elem:
 		return binary_search(elem, arr, low, middle)
-	else:
-		return None
-
 
 
 
