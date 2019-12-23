@@ -39,7 +39,6 @@ def peek(ind: int = 0) -> Any:
 	:return: peeked element
 	"""
 	global stack
-	print(ind)
 	ind = ~ind
 	return stack[ind]
 
