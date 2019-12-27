@@ -51,3 +51,8 @@ def clear() -> None:
 	global queue
 	queue = []
 	return None
+
+
+def leng():
+	global queue
+	return len(queue)

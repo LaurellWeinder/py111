@@ -52,3 +52,7 @@ def clear() -> None:
 	global stack
 	stack = []
 	return None
+
+
+def leng():
+	return len(stack)
