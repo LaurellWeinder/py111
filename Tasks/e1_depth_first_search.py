@@ -1,5 +1,6 @@
 from typing import Hashable, List
 import networkx as nx
+import Tasks.a0_my_stack as st
 
 
 def dfs(g: nx.Graph, start_node: Hashable) -> List[Hashable]:
@@ -10,5 +11,13 @@ def dfs(g: nx.Graph, start_node: Hashable) -> List[Hashable]:
 	:param start_node: starting node of search
 	:return: list of nodes in the visited order
 	"""
-	print(g, start_node)
-	return list(g.nodes)
+	visited = []
+	st.push(start_node)
+	while st.leng() > 0:
+		start_node = st.pop()
+		visited.append(start_node)
+		neighbors = list(g.neighbors(start_node))
+		for neigh in neighbors:
+			if neigh not in visited:
+				st.push(neigh)
+	return visited

@@ -39,7 +39,6 @@ def peek(ind: int = 0) -> Any:
 	:return: peeked element
 	"""
 	global stack
-	print(ind)
 	ind = ~ind
 	return stack[ind]
 
@@ -53,3 +52,7 @@ def clear() -> None:
 	global stack
 	stack = []
 	return None
+
+
+def leng():
+	return len(stack)

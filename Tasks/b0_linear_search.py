@@ -18,3 +18,6 @@ def min_search(arr: Sequence) -> int:
 			m = arr[i]
 			ind = i
 	return ind
+
+
+
