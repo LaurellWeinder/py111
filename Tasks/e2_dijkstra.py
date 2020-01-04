@@ -1,4 +1,5 @@
 from typing import Hashable, Mapping, Union
+from operator import getitem
 import networkx as nx
 
 
@@ -12,18 +13,21 @@ def dijkstra_algo(g: nx.DiGraph, starting_node: Hashable) -> Mapping[Hashable, U
 	visited = []
 	path = {i: float('inf') for i in g.nodes}
 	path[starting_node] = 0
-	while True:
+	while len(visited) <= len(path):
 		if starting_node not in visited:
-			neighbors = g[starting_node]
-			for i in sorted(neighbors):
-				if i not in visited:
-					weight = g[starting_node].get('weight') + g[i].get('weight')
-					if weight > path[starting_node]:
+			neighbors = sorted(g[starting_node].items(), key=lambda x: getitem(x[1], 'weight'))
+			for i in neighbors:
+				if i[0][0] not in visited:
+					weight = g.edges[starting_node, i[0][0]]['weight'] + path[starting_node]
+					print(weight)
+					if weight < path[starting_node]:
 						path[starting_node] = weight
+						print(path)
 						visited.append(starting_node)
-
-
-
+						print(visited)
+			starting_node = neighbors.pop(0)
+			print(starting_node)
+		return path
 
 G = nx.DiGraph()
 G.add_nodes_from("ABCDEFG")
@@ -39,4 +43,4 @@ G.add_weighted_edges_from([
 	("G", "D", 1),
 	("D", "A", 2),])
 
-print(G['A'].get())
+print(dijkstra_algo(G, 'A'))
