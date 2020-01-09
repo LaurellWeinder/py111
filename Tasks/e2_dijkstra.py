@@ -10,37 +10,22 @@ def dijkstra_algo(g: nx.DiGraph, starting_node: Hashable) -> Mapping[Hashable, U
 	:param starting_node: starting node from g
 	:return: dict like {'node1': 0, 'node2': 10, '3': 33, ...} with path costs, where nodes are nodes from g
 	"""
-	visited = []
+	visited = set()
 	path = {i: float('inf') for i in g.nodes}
 	path[starting_node] = 0
-	while len(visited) <= len(path):
+	while len(path) >= len(visited):
 		if starting_node not in visited:
 			neighbors = sorted(g[starting_node].items(), key=lambda x: getitem(x[1], 'weight'))
-			for i in neighbors:
-				if i[0][0] not in visited:
-					weight = g.edges[starting_node, i[0][0]]['weight'] + path[starting_node]
-					print(weight)
-					if weight < path[starting_node]:
-						path[starting_node] = weight
-						print(path)
-						visited.append(starting_node)
-						print(visited)
-			starting_node = neighbors.pop(0)
-			print(starting_node)
-		return path
-
-G = nx.DiGraph()
-G.add_nodes_from("ABCDEFG")
-G.add_weighted_edges_from([
-	("A", "B", 1),
-	("B", "C", 3),
-	("C", "E", 4),
-	("E", "F", 3),
-	("B", "E", 8),
-	("C", "D", 1),
-	("D", "E", 2),
-	("B", "D", 2),
-	("G", "D", 1),
-	("D", "A", 2),])
-
-print(dijkstra_algo(G, 'A'))
+			if len(neighbors) == 0:
+				starting_node = min(path.items())[0]
+			else:
+				for i in neighbors:
+					if i[0][0] not in visited:
+						weight = g.edges[starting_node, i[0][0]]['weight'] + path[starting_node]
+						if weight < path[i[0][0]]:
+							path[i[0][0]] = weight
+							visited.add(starting_node)
+				starting_node = neighbors.pop(0)[0][0]
+		else:
+			return path
+	return path
