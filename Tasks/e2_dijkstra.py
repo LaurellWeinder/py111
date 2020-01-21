@@ -17,7 +17,7 @@ def dijkstra_algo(g: nx.DiGraph, starting_node: Hashable) -> Mapping[Hashable, U
 		if starting_node not in visited:
 			neighbors = sorted(g[starting_node].items(), key=lambda x: getitem(x[1], 'weight'))
 			if len(neighbors) == 0:
-				starting_node = min(path.items())[0]
+				starting_node = min(path)
 			else:
 				for i in neighbors:
 					if i[0][0] not in visited:
