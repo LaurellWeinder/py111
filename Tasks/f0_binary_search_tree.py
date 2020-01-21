@@ -1,10 +1,13 @@
 """
 You can do it either with networkx ('cause tree is a graph)
-or with dicts (smth like {'key': 0, value: 123, 'left': {...}, 'right':{...}})
+or with dicts (smth like {'key': 0, 'value': 123, 'left': {...}, 'right':{...}})
 """
 
 from typing import Hashable, Any, Optional, Tuple
 # import networkx as nx
+
+
+tree = {}
 
 
 def insert(key: Hashable, value: Any) -> None:
@@ -15,7 +18,19 @@ def insert(key: Hashable, value: Any) -> None:
 	:param value: value associated with key
 	:return: None
 	"""
-	print(key, value)
+
+	def ins(key, value, tree):
+		if len(tree) == 0:
+			tree.update({'key': key, 'value': value, 'left': {}, 'right': {}})
+		else:
+			if key < tree['key']:
+				return ins(key, value, tree['left'])
+			elif key > tree['key']:
+				return ins(key, value, tree['right'])
+			else:
+				tree['value'] = value
+		return tree
+	ins(key, value, tree)
 	return None
 
 
@@ -26,8 +41,23 @@ def remove(key: Hashable) -> Optional[Tuple[Hashable, Any]]:
 	:param key: key to be removed
 	:return: deleted (key, value) pair or None
 	"""
-	print(key)
-	return None
+	def recursive_remove(key, tree):
+		if key > tree['key']:
+			recursive_remove(key, tree['right'])
+		elif key < tree['key']:
+			recursive_remove(key, tree['left'])
+		else:
+			if tree['left'] == {} and tree['right'] == {}:
+				del tree['key']
+				return tree['key']['value']
+			elif tree['left'] == {}:
+				tree['key'] = tree['right']
+			elif tree['right'] == {}:
+				tree['key'] = tree['left']
+			else:
+				min = sorted(tree['right'])
+				tree['key'] = tree[min]
+				recursive_remove(min, tree)
 
 
 def find(key: Hashable) -> Optional[Any]:
@@ -37,8 +67,17 @@ def find(key: Hashable) -> Optional[Any]:
 	:param key: key for search in the BST
 	:return: value associated with the corresponding key
 	"""
-	print(key)
-	return None
+
+	def nfind(key: Hashable, tree):
+		if key == tree['key']:
+			return tree['value']
+		elif key > tree['key']:
+			return nfind(key, tree['right'])
+		elif key < tree['key']:
+			return nfind(key, tree['left'])
+		else:
+			raise KeyError
+	return nfind(key, tree)
 
 
 def clear() -> None:
@@ -47,4 +86,5 @@ def clear() -> None:
 
 	:return: None
 	"""
+	tree = {}
 	return None
