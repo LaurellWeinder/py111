@@ -1,5 +1,7 @@
 import unittest
-import Tasks.a0_my_stack as my_stack
+from Tasks.a0_my_stack import Stack
+
+my_stack = Stack()
 
 
 class MyTestCase(unittest.TestCase):

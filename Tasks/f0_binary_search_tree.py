@@ -6,8 +6,23 @@ or with dicts (smth like {'key': 0, 'value': 123, 'left': {...}, 'right':{...}})
 from typing import Hashable, Any, Optional, Tuple
 # import networkx as nx
 
+class BinarySearchTree:
 
-tree = {}
+	def __init__(self):
+		self.root = None
+
+	class TreeNode:
+		def __init__(self, value: int):
+			self.value = value
+			self.left = None
+			self.right = None
+
+	def insert(self, root: TreeNode, value: int):
+		if self.root:
+			if value > self.root.value:
+
+
+
 
 
 def insert(key: Hashable, value: Any) -> None:
@@ -71,14 +86,12 @@ def find(key: Hashable) -> Optional[Any]:
 	def nfind(key: Hashable, tree):
 		if key == tree['key']:
 			return tree['value']
-		elif key > tree['key']:
+		if key > tree['key']:
 			return nfind(key, tree['right'])
 		elif key < tree['key']:
 			return nfind(key, tree['left'])
-		else:
-			raise KeyError
-	return nfind(key, tree)
-
+	nfind(key, tree)
+	return None
 
 def clear() -> None:
 	"""
@@ -88,3 +101,10 @@ def clear() -> None:
 	"""
 	tree = {}
 	return None
+
+if __name__ == '__main__':
+	insert(13, 'Something')
+	insert(5, 'Somethin else')
+	insert(25, 'Hello There')
+	insert(50, 'Why')
+	print(find(130))

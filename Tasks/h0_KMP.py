@@ -53,7 +53,3 @@ def kmp_algo(inp_string: str, substr: str) -> Optional[int]:
 				j = prefix_list[j - 1]
 	else:
 		return None
-
-
-
-
