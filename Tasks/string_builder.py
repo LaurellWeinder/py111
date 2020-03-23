@@ -10,7 +10,7 @@ class StringBuilder:
         return ''.join(self.string)
 
     def insert(self, elem: str, ind: int = 0):
-        if ind > len(''.join(self.string)):
+        if ind > len(self.string):
             raise IndexError('Index out of range')
         if ind < 0:
             self.string.insert(ind, elem)
