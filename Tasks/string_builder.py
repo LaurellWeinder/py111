@@ -12,10 +12,7 @@ class StringBuilder:
     def insert(self, elem: str, ind: int = 0):
         if ind > len(self.string):
             raise IndexError('Index out of range')
-        if ind < 0:
-            self.string.insert(ind, elem)
-        else:
-            self.string.insert(ind, elem)
+        self.string.insert(ind, elem)
 
     def __getitem__(self, key: int or slice):
         if isinstance(key, slice):
