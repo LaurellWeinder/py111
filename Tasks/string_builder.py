@@ -14,7 +14,7 @@ class StringBuilder:
             raise IndexError('Index out of range')
         self.string.insert(ind, elem)
 
-    def __getitem__(self, key: int or slice):
+    def __getitem__(self, key: Union[int, slice]):
         if isinstance(key, slice):
             start, stop, step = key.indices(len(self.string))
             return ''.join(str(i) for i in self.string[start:stop:step])
