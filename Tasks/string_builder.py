@@ -31,7 +31,7 @@ class StringBuilder:
         self.string.insert(key, value)
 
     def __len__(self):
-        return len(''.join(self.string))
+        return len(self.string)
 
     def clear(self):
         self.string = []
