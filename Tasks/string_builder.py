@@ -23,7 +23,7 @@ class StringBuilder:
                 raise IndexError('Index out of range')
             if key < 0:
                 key += len(self.string)
-            return ''.join(str(i) for i in self.string)[key]
+            return str(self.string[key])
         else:
             raise TypeError('Invalid type')
 
