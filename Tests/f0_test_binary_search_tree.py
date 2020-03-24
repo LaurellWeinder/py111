@@ -20,9 +20,9 @@ class MyTestCase(unittest.TestCase):
 	def test_removes(self):
 		try:
 			self.bst.insert(42, "The meaning again")
-			self.bst.remove(42)
-			self.bst.remove(42)
-			self.bst.remove(43)
+			self.bst.remove(42, self.bst.root)
+			self.bst.remove(42, self.bst.root)
+			self.bst.remove(43, self.bst.root)
 		except Exception as e:
 			print(e)
 			self.fail(

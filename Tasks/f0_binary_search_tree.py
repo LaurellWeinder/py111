@@ -50,7 +50,7 @@ class BinarySearchTree:
         else:
             self.root = self.TreeNode(key, value)
 
-    def remove(self, key: int, root=None):
+    def remove(self, key: int, root: TreeNode):
         """
         Remove key and associated value from the BST if exists
 
@@ -59,33 +59,28 @@ class BinarySearchTree:
         :return: deleted (key, value) pair or None
         """
         if root is None:
-            root = self.root
-        while root:
-            if key > root.key:
-                root = root.right
-            elif key < root.key:
-                root = root.left
+            return root
+        if key > root.key:
+            root.right = self.remove(key, root.right)
+        elif key < root.key:
+            root.left = self.remove(key, root.left)
+        else:
+            if root.left is None:
+                dummy = root.right
+                root = None
+                return dummy
+            elif root.right is None:
+                dummy = root.left
+                root = None
+                return dummy
             else:
-                if root.left is None and root.right is None:
-                    temp = self.TreeNode(root.key, root.value)
-                    del root
-                    return temp.key, temp.value
-                elif root.left is None:
-                    root.key = root.right.key
-                    root.value = root.right.value
-                elif root.right is None:
-                    root.key = root.left.key
-                    root.value = root.left.value
-                else:
-                    right_min = root.right
-                    node = root.right
-                    while node is not None:
-                        if node > node.right:
-                            right_min = node.right
-                        node = node.right
-                    root.key = right_min.key
-                    self.remove(right_min.key, right_min)
-            root.is_empty()
+                dummy = root
+                while dummy.left is not None:
+                    dummy = dummy.left
+                root.key = dummy.key
+                root.value = dummy.value
+                root.right = self.remove(dummy.key, root.right)
+
 
     def find(self, key: int):
         """
@@ -110,4 +105,8 @@ class BinarySearchTree:
 
 if __name__ == '__main__':
     bst = BinarySearchTree()
+    bst.insert(1, '1')
+    bst.insert(2, '2')
+    bst.insert(3, '3')
+    bst.remove(2, bst.root)
     print(bst)
