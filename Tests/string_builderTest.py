@@ -45,5 +45,12 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(str(self.sb),  'ABCDEFGH')
 
 
+    def test_len(self):
+        self.sb.clear()
+        self.sb.append('ABCDEF')
+        self.assertEqual(len(self.sb), 6)
+        self.sb += 'GH'
+        self.assertEqual(len(self.sb), 8)
+
 if __name__ == '__main__':
     unittest.main()

@@ -3,108 +3,111 @@ You can do it either with networkx ('cause tree is a graph)
 or with dicts (smth like {'key': 0, 'value': 123, 'left': {...}, 'right':{...}})
 """
 
-from typing import Hashable, Any, Optional, Tuple
-# import networkx as nx
+from typing import Any
+
 
 class BinarySearchTree:
 
-	def __init__(self):
-		self.root = None
+    def __init__(self):
+        self.root = None
 
-	class TreeNode:
-		def __init__(self, value: int):
-			self.value = value
-			self.left = None
-			self.right = None
+    class TreeNode:
+        def __init__(self, key: int, value: Any):
+            self.key = key
+            self.value = value
+            self.left = None
+            self.right = None
 
-	def insert(self, root: TreeNode, value: int):
-		if self.root:
-			if value > self.root.value:
+        def __str__(self):
+            return f'{self.key}-{self.left}-{self.right}'
 
+    def insert(self,  key: int, value: Any, root=None):
+        """
+        Insert (key, value) pair to binary search tree
 
+        :param key: key from pair (key is used for positioning node in the tree)
+        :param value: value associated with key
+        :param root: default value is None
+        :return: None
+        """
+        if root is None:
+            root = self.root
+        if self.root:
+            if key == root.key:
+                root.value = value
+            if key > root.key:
+                if root.right is None:
+                    new_node = self.TreeNode(key, value)
+                    root.right = new_node
+                else:
+                    self.insert(key, value, root.right)
+            if key < root.key:
+                if root.left is None:
+                    new_node = self.TreeNode(key, value)
+                    root.left = new_node
+                else:
+                    self.insert(key, value, root.left)
+        else:
+            self.root = self.TreeNode(key, value)
 
+    def remove(self, key: int, root=None):
+        """
+        Remove key and associated value from the BST if exists
 
+        :param key: key to be removed
+        :param root: default value is None
+        :return: deleted (key, value) pair or None
+        """
+        if root is None:
+            root = self.root
+        while root:
+            if key > root.key:
+                root = root.right
+            elif key < root.key:
+                root = root.left
+            else:
+                if root.left is None and root.right is None:
+                    temp = self.TreeNode(root.key, root.value)
+                    del root
+                    return temp.key, temp.value
+                elif root.left is None:
+                    root.key = root.right.key
+                    root.value = root.right.value
+                elif root.right is None:
+                    root.key = root.left.key
+                    root.value = root.left.value
+                else:
+                    right_min = root.right
+                    node = root.right
+                    while node is not None:
+                        if node > node.right:
+                            right_min = node.right
+                        node = node.right
+                    root.key = right_min.key
+                    self.remove(right_min.key, right_min)
+            root.is_empty()
 
-def insert(key: Hashable, value: Any) -> None:
-	"""
-	Insert (key, value) pair to binary search tree
+    def find(self, key: int):
+        """
+        Find value by given key in the BST
 
-	:param key: key from pair (key is used for positioning node in the tree)
-	:param value: value associated with key
-	:return: None
-	"""
+        :param key: key for search in the BST
+        :return: value associated with the corresponding key
+        """
+        root = self.root
+        while root:
+            if key == root.key:
+                return root.value
+            elif key < root.key:
+                root = root.left
+            elif key > root.key:
+                root = root.right
+        raise KeyError
 
-	def ins(key, value, tree):
-		if len(tree) == 0:
-			tree.update({'key': key, 'value': value, 'left': {}, 'right': {}})
-		else:
-			if key < tree['key']:
-				return ins(key, value, tree['left'])
-			elif key > tree['key']:
-				return ins(key, value, tree['right'])
-			else:
-				tree['value'] = value
-		return tree
-	ins(key, value, tree)
-	return None
+    def __str__(self):
+        return str(self.root)
 
-
-def remove(key: Hashable) -> Optional[Tuple[Hashable, Any]]:
-	"""
-	Remove key and associated value from the BST if exists
-
-	:param key: key to be removed
-	:return: deleted (key, value) pair or None
-	"""
-	def recursive_remove(key, tree):
-		if key > tree['key']:
-			recursive_remove(key, tree['right'])
-		elif key < tree['key']:
-			recursive_remove(key, tree['left'])
-		else:
-			if tree['left'] == {} and tree['right'] == {}:
-				del tree['key']
-				return tree['key']['value']
-			elif tree['left'] == {}:
-				tree['key'] = tree['right']
-			elif tree['right'] == {}:
-				tree['key'] = tree['left']
-			else:
-				min = sorted(tree['right'])
-				tree['key'] = tree[min]
-				recursive_remove(min, tree)
-
-
-def find(key: Hashable) -> Optional[Any]:
-	"""
-	Find value by given key in the BST
-
-	:param key: key for search in the BST
-	:return: value associated with the corresponding key
-	"""
-
-	def nfind(key: Hashable, tree):
-		if key == tree['key']:
-			return tree['value']
-		if key > tree['key']:
-			return nfind(key, tree['right'])
-		elif key < tree['key']:
-			return nfind(key, tree['left'])
-	nfind(key, tree)
-	return None
-
-def clear() -> None:
-	"""
-	Clear the tree
-
-	:return: None
-	"""
-	tree = {}
-	return None
 
 if __name__ == '__main__':
-	insert(13, 'Something')
-	insert(5, 'Somethin else')
-	insert(25, 'Hello There')
-	insert(50, 'Why')
-	print(find(130))
+    bst = BinarySearchTree()
+    print(bst)

@@ -1,3 +1,6 @@
+from typing import Union
+
+
 class StringBuilder:
 
     def __init__(self, data):

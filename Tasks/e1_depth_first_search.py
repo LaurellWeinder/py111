@@ -1,7 +1,8 @@
 from typing import Hashable, List
 import networkx as nx
-import Tasks.a0_my_stack as st
+from Tasks.a0_my_stack import Stack
 
+st = Stack()
 
 def dfs(g: nx.Graph, start_node: Hashable) -> List[Hashable]:
 	"""
@@ -13,7 +14,7 @@ def dfs(g: nx.Graph, start_node: Hashable) -> List[Hashable]:
 	"""
 	visited = []
 	st.push(start_node)
-	while st.leng() > 0:
+	while len(st) > 0:
 		start_node = st.pop()
 		visited.append(start_node)
 		neighbors = list(g.neighbors(start_node))
