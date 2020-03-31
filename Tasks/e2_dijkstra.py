@@ -4,28 +4,30 @@ import networkx as nx
 
 
 def dijkstra_algo(g: nx.DiGraph, starting_node: Hashable) -> Mapping[Hashable, Union[int, float]]:
-	"""
-	Count shortest paths from starting node to all nodes of graph g
-	:param g: Graph from NetworkX
-	:param starting_node: starting node from g
-	:return: dict like {'node1': 0, 'node2': 10, '3': 33, ...} with path costs, where nodes are nodes from g
-	"""
-	visited = set()
-	path = {i: float('inf') for i in g.nodes}
-	path[starting_node] = 0
-	while len(path) >= len(visited):
-		if starting_node not in visited:
-			neighbors = sorted(g[starting_node].items(), key=lambda x: getitem(x[1], 'weight'))
-			if len(neighbors) == 0:
-				starting_node = min(path)
-			else:
-				for i in neighbors:
-					if i[0][0] not in visited:
-						weight = g.edges[starting_node, i[0][0]]['weight'] + path[starting_node]
-						if weight < path[i[0][0]]:
-							path[i[0][0]] = weight
-							visited.add(starting_node)
-				starting_node = neighbors.pop(0)[0][0]
-		else:
-			return path
-	return path
+    """
+    Count shortest paths from starting node to all nodes of graph g
+    :param g: Graph from NetworkX
+    :param starting_node: starting node from g
+    :return: dict like {'node1': 0, 'node2': 10, '3': 33, ...} with path costs, where nodes are nodes from g
+    """
+    unvisited = {node: float('inf') for node in g.nodes}
+    path = {node: float('inf') for node in g.nodes}
+    unvisited[starting_node] = 0
+    path[starting_node] = 0
+    while True:
+        neighbors = list(g.neighbors(starting_node))
+        for neighbor in neighbors:
+            if neighbor not in unvisited:
+                continue
+            weight = g.edges[starting_node, neighbor]['weight'] + unvisited[starting_node]
+            if weight < unvisited[neighbor]:
+                unvisited[neighbor] = weight
+                path[neighbor] = weight
+        del unvisited[starting_node]
+        if not unvisited:
+            break
+        starting_node = sorted(unvisited, key=unvisited.get)[0]
+    return path
+
+if __name__ == '__main__':
+    pass
